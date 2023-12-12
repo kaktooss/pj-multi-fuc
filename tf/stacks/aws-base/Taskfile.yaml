@@ -1,0 +1,27 @@
+version: 3
+
+includes:
+  tf:
+    taskfile: ../../../.task/terraform.yaml
+
+silent: true
+
+env:
+  STACK: aws-base
+  ENVNAME: '{{.ENVNAME | default "demo"}}'
+  AWS_PROFILE: '{{.AWS_PROFILE | default "default"}}'
+
+tasks:
+  default:
+    - task: tf:plan
+
+  apply:
+    - task: tf:apply
+
+  output:
+    cmds:
+      - task: tf:output
+        vars: {OUTPUT: "{{.CLI_ARGS}}"}
+
+  destroy:
+    - task: tf:destroy

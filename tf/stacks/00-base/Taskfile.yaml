@@ -1,0 +1,17 @@
+version: 3
+
+includes:
+  tf:
+    taskfile: ../../../.task/terraform.yaml
+
+silent: true
+
+env:
+  STACK: base
+
+tasks:
+  default:
+    - task: tf:plan
+
+  apply:
+    - task: tf:apply

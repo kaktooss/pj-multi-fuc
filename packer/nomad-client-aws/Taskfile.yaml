@@ -1,0 +1,16 @@
+version: 3
+
+silent: true
+
+env:
+  PROJECT: nomad-client-aws
+  AWS_PROFILE: '{{.AWS_PROFILE | default "sandbox2-aws"}}'
+
+tasks:
+  validate:
+    cmds:
+      - packer validate -syntax-only .
+
+  build:
+    cmds:
+      - packer build .

@@ -1,0 +1,40 @@
+mode: standalone
+replicas: 1
+
+resources:
+  requests:
+    memory: 64Mi
+
+persistence:
+  enabled: true
+  existingClaim: "minio-nfs"
+
+securityContext:
+  enabled: false
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+  fsGroupChangePolicy: OnRootMismatch
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  path: /
+  hosts:
+    - s3.dt.codehound.cz
+
+consoleIngress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  path: /
+  hosts:
+    - minio.dt.codehound.cz
+
+users: [ ]
+
+buckets:
+  - name: state
+    policy: none
+    purge: false

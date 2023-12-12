@@ -1,0 +1,16 @@
+version: 3
+
+silent: true
+
+env:
+  PROJECT: nomad-client-gcp
+  GOOGLE_APPLICATION_CREDENTIALS: ../../tf/keys/dt-dev-gcp.json
+
+tasks:
+  validate:
+    cmds:
+      - packer validate -syntax-only .
+
+  build:
+    cmds:
+      - packer build .

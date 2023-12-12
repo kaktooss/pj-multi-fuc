@@ -1,0 +1,59 @@
+version: 3
+
+silent: true
+
+env:
+  TF_EXEC: terraform
+  PROJECT: '{{.PROJECT | default "pj-multi-fuc"}}'
+  TFPLAN_FILE: "/tmp/{{.PROJECT}}-{{if .ENV}}{{.ENV}}-{{end}}{{.STACK}}-tf.plan"
+
+tasks:
+  clean:
+    desc: Clean TF
+    cmds:
+      - rm -rf .terraform
+
+  get:
+    desc: Download TF modules
+    cmds:
+      - "{{.TF_EXEC}} get"
+
+  fmt:
+    desc: Format TF code
+    cmds:
+      - "{{.TF_EXEC}} fmt"
+
+  init:
+    desc: Initialize TF
+    deps: [ get, fmt ]
+    cmds:
+      - "{{.TF_EXEC}} init {{.TF_STATE_ARGS}}"
+
+  plan:
+    desc: Generate TF plan
+    deps: [ init ]
+    vars:
+      SECRETS:
+        sh: if [[ -d secrets && -f secrets/{{.ENVNAME}}.tfvars ]]; then echo "--var-file=secrets/{{.ENVNAME}}.tfvars"; fi
+    cmds:
+      - echo "Generating to {{.TFPLAN_FILE}}..."
+      - "{{.TF_EXEC}} plan -refresh=true {{if .ENVNAME}}--var-file=params/{{.ENVNAME}}.tfvars{{end}} {{.SECRETS}} -out={{.TFPLAN_FILE}} {{.CLI_ARGS}}"
+
+  apply:
+    desc: Apply TF plan
+    cmds:
+      - echo "Applying from {{.TFPLAN_FILE}}"
+      - "{{.TF_EXEC}} apply {{.TFPLAN_FILE}}"
+      - rm {{.TFPLAN_FILE}}
+
+  destroy:
+    desc: Destroy TF resources
+    cmds:
+      - echo "DESTROYING RESOURCES!!!"
+      - "{{.TF_EXEC}} destroy {{if .ENVNAME}}--var-file=params/{{.ENVNAME}}.tfvars{{end}}"
+
+  taint-resource:
+    desc: Taint TF resources
+    internal: true
+    cmds:
+      - "{{.TF_EXEC}} taint {{.RESOURCE}}"

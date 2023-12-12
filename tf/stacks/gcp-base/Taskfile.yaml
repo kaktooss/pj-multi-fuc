@@ -1,0 +1,18 @@
+version: 3
+
+includes:
+  tf:
+    taskfile: ../../../.task/terraform.yaml
+
+silent: true
+
+env:
+  STACK: gcp-base
+  ENVNAME: '{{.ENVNAME | default "dt-micro"}}'
+
+tasks:
+  default:
+    - task: tf:plan
+
+  apply:
+    - task: tf:apply

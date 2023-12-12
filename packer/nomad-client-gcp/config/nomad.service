@@ -1,0 +1,21 @@
+[Unit]
+Description=Nomad
+Documentation=https://www.nomadproject.io/docs/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStartPre=/bin/bash -c "/bin/systemctl set-environment ip=$(/usr/bin/hostname -I | awk '{print $1}')"
+ExecStart=/usr/local/bin/nomad agent -config /etc/nomad.d -bind=${ip}
+KillMode=process
+KillSignal=SIGINT
+LimitNOFILE=65536
+LimitNPROC=infinity
+Restart=on-failure
+RestartSec=2
+TasksMax=infinity
+OOMScoreAdjust=-1000
+
+[Install]
+WantedBy=multi-user.target

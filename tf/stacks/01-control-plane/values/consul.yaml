@@ -1,0 +1,21 @@
+global:
+  enabled: true
+  acls:
+    manageSystemACLs: false
+  metrics:
+    enabled: true
+
+server:
+  replicas: 1
+  affinity: { }
+  exposeService:
+    enabled: true
+ui:
+  ingress:
+    enabled: true
+    ingressClassName: "nginx"
+    pathType: Prefix
+    hosts:
+      - host: consul.dt.codehound.cz
+        paths:
+          - /

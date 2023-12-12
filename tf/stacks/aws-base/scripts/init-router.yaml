@@ -1,0 +1,24 @@
+#cloud-config
+package_update: true
+
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - fail2ban
+  - wireguard
+  - net-tools
+  - htop
+  - mc
+  - inetutils-traceroute
+hostname: ${hostname}
+fqdn: ${hostname}.${domain}
+prefer_fqdn_over_hostname: true
+runcmd:
+  - set -x
+  - sudo mkdir -p /etc/wireguard
+  - sudo mv /tmp/wg0.conf /etc/wireguard/wg0.conf
+  - sudo systemctl enable wg-quick@wg0
+  - sudo systemctl start wg-quick@wg0
