@@ -37,7 +37,8 @@ resource "aws_security_group" "client" {
 }
 
 resource "aws_iam_role" "client" {
-  name                = "${var.environment}-client"
+  name = "${var.environment}-client"
+
   assume_role_policy  = data.aws_iam_policy_document.assume_role_client.json
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",

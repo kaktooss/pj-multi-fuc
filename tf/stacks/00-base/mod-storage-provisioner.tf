@@ -12,12 +12,12 @@ resource "helm_release" "nfs_storage" {
 
   set {
     name  = "nfs.server"
-    value = "192.168.1.8"
+    value = var.nfs_server
   }
 
   set {
     name  = "nfs.path"
-    value = "/srv/nfs/micro-dt"
+    value = var.nfs_path
   }
 
   set {

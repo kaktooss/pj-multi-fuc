@@ -6,23 +6,23 @@ provider "google" {
 
 provider "helm" {
   kubernetes {
-    config_path = "../../keys/pj-srv-0"
+    config_path = "../../keys/micro-dt-kubeconfig"
   }
 }
 
 provider "kubernetes" {
-  config_path = "../../keys/pj-srv-0"
+  config_path = "../../keys/micro-dt-kubeconfig"
 }
 
 provider "tls" {}
 
 provider "kubectl" {
-  config_path = "../../keys/pj-srv-0"
+  config_path = "../../keys/micro-dt-kubeconfig"
 }
 
 terraform {
   backend "local" {
-    path = "../../tf-state/pj-multi-fuc-base.tfstate"
+    path = "../../tf-state/demo-base.tfstate"
   }
 
   required_providers {

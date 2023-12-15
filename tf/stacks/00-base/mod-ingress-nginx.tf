@@ -4,6 +4,7 @@ resource "kubernetes_namespace" "ingress" {
   }
 }
 
+
 resource "helm_release" "nginx_ingress" {
   depends_on = [helm_release.metallb, kubectl_manifest.metallb_resources]
 
@@ -18,4 +19,9 @@ resource "helm_release" "nginx_ingress" {
   values = [
     file("values/ingress-nginx.yaml"),
   ]
+
+  set {
+    name  = "controller.service.loadBalancerIP"
+    value = var.ingress_ip
+  }
 }

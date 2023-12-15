@@ -1,26 +1,15 @@
 provider "helm" {
   kubernetes {
-    config_path = "../../keys/pj-srv-0"
+    config_path = "../../keys/demo-kubeconfig"
   }
 }
 
 provider "kubernetes" {
-  config_path = "../../keys/pj-srv-0"
-}
-
-provider "kubectl" {
-  config_path = "../../keys/pj-srv-0"
+  config_path = "../../keys/demo-kubeconfig"
 }
 
 terraform {
   backend "local" {
-    path = "../../tf-state/pj-multi-fuc-control-plane.tfstate"
-  }
-
-  required_providers {
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = ">= 1.7.0"
-    }
+    path = "../../tf-state/demo-control-plane.tfstate"
   }
 }

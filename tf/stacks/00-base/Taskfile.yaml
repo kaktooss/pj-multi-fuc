@@ -7,6 +7,7 @@ includes:
 silent: true
 
 env:
+  ENVNAME: demo
   STACK: base
 
 tasks:

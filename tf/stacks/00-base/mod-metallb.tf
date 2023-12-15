@@ -14,8 +14,13 @@ resource "helm_release" "metallb" {
   namespace = kubernetes_namespace.metallb.metadata[0].name
 }
 
+
 data "kubectl_path_documents" "metallb_resources" {
   pattern = "./resources-metallb/*.yaml"
+
+  vars = {
+    lb_address_pool : var.lb_address_pool
+  }
 }
 
 resource "kubectl_manifest" "metallb_resources" {

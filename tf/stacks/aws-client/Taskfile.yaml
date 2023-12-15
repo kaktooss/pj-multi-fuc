@@ -8,8 +8,8 @@ silent: true
 
 env:
   STACK: aws-client
-  ENVNAME: '{{.ENVNAME | default "demo"}}'
-  AWS_PROFILE: '{{.AWS_PROFILE | default "default"}}'
+  ENVNAME: '{{.ENVNAME | default "micro-dt"}}'
+  AWS_PROFILE: '{{.AWS_PROFILE | default "sandbox2-aws-release"}}'
 
 tasks:
   default:

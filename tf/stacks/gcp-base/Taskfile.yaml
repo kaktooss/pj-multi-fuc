@@ -8,7 +8,7 @@ silent: true
 
 env:
   STACK: gcp-base
-  ENVNAME: '{{.ENVNAME | default "dt-micro"}}'
+  ENVNAME: '{{.ENVNAME | default "micro-dt"}}'
 
 tasks:
   default:

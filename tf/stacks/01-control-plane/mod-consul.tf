@@ -17,5 +17,5 @@ resource "helm_release" "consul" {
     file("values/consul.yaml"),
   ]
 
-  max_history = 3
+  max_history = var.helm_max_history
 }
