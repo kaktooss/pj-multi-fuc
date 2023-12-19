@@ -14,7 +14,9 @@ resource "helm_release" "consul" {
   namespace = kubernetes_namespace.consul.metadata[0].name
 
   values = [
-    file("values/consul.yaml"),
+    templatefile("values/consul.yaml", {
+      consul_ingress_domain = var.ingress_domain
+    }),
   ]
 
   max_history = var.helm_max_history

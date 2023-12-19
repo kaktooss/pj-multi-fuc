@@ -127,6 +127,11 @@ resource "kubernetes_stateful_set_v1" "nomad" {
           ]
 
           env {
+            name  = "CONFIG_HASH"
+            value = sha256("${kubernetes_config_map_v1.nomad_config.data["nomad-node.hcl.tpl"]}${kubernetes_config_map_v1.nomad_config.data["nomad-server.hcl"]}")
+          }
+
+          env {
             name  = "NOMAD_SKIP_DOCKER_IMAGE_WARN"
             value = "true"
           }
@@ -281,7 +286,7 @@ resource "kubernetes_ingress_v1" "nomad" {
 
   spec {
     rule {
-      host = "nomad.${var.domain_name}"
+      host = "nomad.${var.ingress_domain}"
       http {
         path {
           path      = "/"

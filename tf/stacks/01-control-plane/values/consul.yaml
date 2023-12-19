@@ -16,6 +16,6 @@ ui:
     ingressClassName: "nginx"
     pathType: Prefix
     hosts:
-      - host: consul.dt.codehound.cz
+      - host: consul.${consul_ingress_domain}
         paths:
           - /

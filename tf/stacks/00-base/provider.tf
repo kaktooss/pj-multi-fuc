@@ -6,18 +6,18 @@ provider "google" {
 
 provider "helm" {
   kubernetes {
-    config_path = "../../keys/micro-dt-kubeconfig"
+    config_path = "../../keys/demo-kubeconfig"
   }
 }
 
 provider "kubernetes" {
-  config_path = "../../keys/micro-dt-kubeconfig"
+  config_path = "../../keys/demo-kubeconfig"
 }
 
 provider "tls" {}
 
 provider "kubectl" {
-  config_path = "../../keys/micro-dt-kubeconfig"
+  config_path = "../../keys/demo-kubeconfig"
 }
 
 terraform {

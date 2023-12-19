@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/debian-12"
+  config.vm.define "pj-multi-fuc-srv"
+  config.vm.hostname = "pj-multi-fuc-srv"
+  config.vm.network :public_network, ip: "192.168.1.201", bridge: "eno1"
+  config.vm.network "forwarded_port", guest: 6443, host: 6443
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "pj-multi-fuc-srv"
+    vb.gui = true
+    vb.memory = "8192"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y mc zip unzip git curl wget
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-external-ip=192.168.1.201 --flannel-external-ip --disable servicelb --disable traefik --disable local-storage --disable-cloud-controller" sh -s -
+    chown vagrant:vagrant /etc/rancher/k3s/k3s.yaml
+  SHELL
+end

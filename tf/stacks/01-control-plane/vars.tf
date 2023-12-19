@@ -2,8 +2,8 @@ variable "helm_max_history" {
   default = 5
 }
 
-variable "domain_name" {
-  default = "dt.codehound.cz"
+variable "ingress_domain" {
+  default = "192-168-1-21.nip.io"
 }
 
 variable "nomad_lb_ip" {
@@ -11,5 +11,5 @@ variable "nomad_lb_ip" {
 }
 
 variable "consul_addr" {
-  default = "192.168.1.22:8500"
+  default = "192-168-1-22.nip.io:8500"
 }
